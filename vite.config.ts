@@ -5,6 +5,7 @@ import { defineConfig } from "vite"
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: "/shadcn-data-grid/",
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
