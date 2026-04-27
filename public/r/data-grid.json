@@ -1,0 +1,49 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "data-grid",
+  "title": "Data Grid",
+  "description": "A shadcn-themed data grid built on react-data-grid with inline cell editors for select, boolean, and number values.",
+  "dependencies": [
+    "react-data-grid"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/data-grid.tsx",
+      "content": "import 'react-data-grid/lib/styles.css';\nexport { DataGrid } from \"react-data-grid\";\nimport type { RenderEditCellProps } from \"react-data-grid\";\n\nexport function SelectEditor<TRow>({\n  row, column, onRowChange, onClose, options,\n}: RenderEditCellProps<TRow> & { options: string[] }) {\n  return (\n    <select\n      autoFocus\n      className=\"w-full h-full px-2 outline-none bg-card text-card-foreground text-sm\"\n      value={String(row[column.key as keyof TRow])}\n      onChange={(e) => onRowChange({ ...row, [column.key]: e.target.value }, true)}\n      onBlur={() => onClose(true)}\n    >\n      {options.map((opt) => (\n        <option key={opt} value={opt}>{opt}</option>\n      ))}\n    </select>\n  );\n}\n\nexport function BooleanEditor<TRow>({\n  row, column, onRowChange, onClose,\n}: RenderEditCellProps<TRow>) {\n  return (\n    <select\n      autoFocus\n      className=\"w-full h-full px-2 outline-none bg-card text-card-foreground text-sm\"\n      value={row[column.key as keyof TRow] ? 'Yes' : 'No'}\n      onChange={(e) => onRowChange({ ...row, [column.key]: e.target.value === 'Yes' }, true)}\n      onBlur={() => onClose(true)}\n    >\n      <option value=\"Yes\">Yes</option>\n      <option value=\"No\">No</option>\n    </select>\n  );\n}\n\nexport function NumberEditor<TRow>({\n  row, column, onRowChange, onClose,\n}: RenderEditCellProps<TRow>) {\n  return (\n    <input\n      autoFocus\n      type=\"number\"\n      min={0}\n      className=\"w-full h-full px-2 outline-none bg-card text-card-foreground text-sm\"\n      value={Number(row[column.key as keyof TRow])}\n      onChange={(e) => onRowChange({ ...row, [column.key]: e.target.valueAsNumber })}\n      onBlur={() => onClose(true)}\n    />\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "css": {
+    ".rdg": {
+      "--rdg-font-size": "0.875rem",
+      "font-family": "var(--font-sans)",
+      "--rdg-color": "var(--card-foreground)",
+      "--rdg-background-color": "var(--card)",
+      "--rdg-header-background-color": "var(--muted)",
+      "--rdg-header-draggable-background-color": "var(--accent)",
+      "--rdg-row-hover-background-color": "var(--accent)",
+      "--rdg-row-selected-background-color": "color-mix(in oklch, var(--primary) 12%, var(--background))",
+      "--rdg-row-selected-hover-background-color": "color-mix(in oklch, var(--primary) 18%, var(--background))",
+      "--rdg-border-width": "1px",
+      "--rdg-border-color": "var(--border)",
+      "--rdg-summary-border-color": "var(--border)",
+      "--rdg-selection-color": "var(--ring)",
+      "--rdg-selection-width": "2px",
+      "--rdg-checkbox-focus-color": "var(--ring)",
+      "border": "1px solid var(--border)",
+      "border-radius": "var(--radius)",
+      "overflow": "hidden"
+    },
+    ".rdg-header-row .rdg-cell": {
+      "color": "var(--muted-foreground)",
+      "font-size": "0.75rem",
+      "font-weight": "500",
+      "letter-spacing": "0.025em",
+      "text-transform": "uppercase"
+    },
+    ".rdg-cell": {
+      "line-height": "1.5"
+    }
+  },
+  "type": "registry:ui"
+}
